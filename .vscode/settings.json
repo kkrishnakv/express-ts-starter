@@ -1,0 +1,14 @@
+{
+    "typescript.tsdk": "node_modules/typescript/lib/",
+    "vsicons.presets.angular": false,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "src/bundle.js": true,
+        "npm-debug*": true,
+        "log": true
+    },
+    "editor.formatOnSave": true
+}
