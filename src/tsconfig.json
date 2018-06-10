@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "declaration": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": ["es6", "dom"],
+        "mapRoot": "../build/server",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "../build/server",
+        "sourceMap": true,
+        "target": "es6",
+        "typeRoots": [
+            "../node_modules/@types"
+        ]
+    }
+}
