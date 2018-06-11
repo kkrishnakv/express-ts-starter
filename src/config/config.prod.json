@@ -1,0 +1,10 @@
+{
+  "Config": {
+    "port": 40401,
+    "appConfig": {
+      "version": "1.0.0",
+      "name": "express-api",
+      "env": "production"
+    }
+  }
+}

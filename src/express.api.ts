@@ -8,16 +8,18 @@ import * as express from 'express';
 import { Logger } from './helpers/logger';
 import { ApiRouting } from './api.routing';
 import { Api } from './helpers/api';
-import { AppSetting } from './config/AppSetting';
+import { IConfig, AppSetting } from './config';
 
 export class ExpressApi {
     public app: express.Express;
     private router: express.Router;
+    private config: IConfig;
 
 
     constructor() {
         this.app = express();
         this.router = express.Router();
+        this.config = AppSetting.getConfig();
         this.configure();
     }
 
@@ -37,11 +39,9 @@ export class ExpressApi {
 
     private configureBaseRoute() {
         this.app.use(function (req, res, next) {
+            let config = AppSetting.getConfig();
             if (req.url === '/') {
-                return res.json({
-                    name: '1.0.0',
-                    version: 'api',
-                });
+                return res.json(config.appConfig);
             } else {
                 next();
             }
@@ -79,14 +79,13 @@ export class ExpressApi {
 
 
     public run() {
-
         let server = http.createServer(this.app);
-        server.listen(AppSetting.Port);
+        server.listen(this.config.port);
         server.on('error', this.onError);
     }
 
     private onError(error) {
-        let port = AppSetting.Port;
+        let port = this.config.port;
         if (error.syscall !== 'listen') {
             throw error;
         }
