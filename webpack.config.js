@@ -23,7 +23,7 @@ module.exports = {
         __dirname: true
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js', '.json']
     },
     module: {
         rules: [{
