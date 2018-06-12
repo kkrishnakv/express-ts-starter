@@ -16,6 +16,7 @@ module.exports = {
         new CopyWebpackPlugin([
             { from: 'package.json' },
             { from: 'yarn.lock' },
+            { from: './src/swagger-docs', to: 'swagger-docs' },
             { from: './src/config/*.json', to: 'config', flatten: true }
         ])
     ],
@@ -26,11 +27,16 @@ module.exports = {
         extensions: ['.ts', '.js', '.json']
     },
     module: {
-        rules: [{
-            use: [{
-                loader: 'ts-loader'
-            }]
-        }]
+        rules: [
+            {
+                test: /\.json/,
+                type: 'javascript/auto', use: [{ loader: 'json-loader' }]
+            },
+            {
+                test: /\.ts/,
+                use: [{ loader: 'ts-loader' }]
+            }
+        ]
 
     }
 };

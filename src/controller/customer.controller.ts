@@ -9,7 +9,7 @@ export class CustomerController {
         this.router.get('/:id', this.getCustomerById);
     }
     public getCustomer(request: Request, response: Response, next: NextFunction) {
-        return Api.ok(request, response, 'Customer info');
+        return Api.ok(request, response, 'Customer info1');
     }
 
     public getCustomerById(request: Request, response: Response, next: NextFunction) {

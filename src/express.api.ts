@@ -9,6 +9,7 @@ import { Logger } from './helpers/logger';
 import { ApiRouting } from './api.routing';
 import { Api } from './helpers/api';
 import { IConfig, AppSetting } from './config';
+import { SwaggerController } from './controller/swagger.controller';
 
 export class ExpressApi {
     public app: express.Express;
@@ -34,6 +35,8 @@ export class ExpressApi {
         this.app.use(json({ limit: '50mb' }));
         this.app.use(compression());
         this.app.use(urlencoded({ limit: '50mb', extended: true }));
+        // tslint:disable-next-line:no-unused-expression
+        new SwaggerController(this.app);
         Logger.configureLogger(this.app);
     }
 

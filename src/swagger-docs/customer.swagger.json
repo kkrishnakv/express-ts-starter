@@ -1,0 +1,87 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Customer",
+        "description": "",
+        "version": "1.0"
+    },
+    "produces": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "Customer",
+            "description": ""
+        }
+    ],
+    "host": "",
+    "basePath": "/Customer",
+    "paths": {
+        "/id": {
+            "get": {
+                "tags": [
+                    "Commercial"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/": {
+            "post": {
+                "tags": [
+                    "customer"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "To add a new customer",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/customer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Customer": {
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "number",
+                    "format": "int64"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "Address": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
