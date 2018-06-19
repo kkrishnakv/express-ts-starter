@@ -9,3 +9,8 @@
    The output file name and the files to copy can be managed in webpack.config.js 
   </p>
 </ol>
+
+<br/>
+https://www.initpals.com/node-js/express-js-application-seed-project-with-typescript/
+<br/>
+https://www.initpals.com/node-js/how-to-use-json-based-configuration-in-express-js/
