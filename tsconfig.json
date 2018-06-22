@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs"
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "./typings.d.ts"
+    ]
   },
   "include": [
     "src/**/*.ts"
