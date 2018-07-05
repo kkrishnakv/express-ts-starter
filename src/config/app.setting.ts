@@ -1,5 +1,5 @@
 import { Environment, IConfig } from '.';
-import { ConfigManager } from './configmanager';
+import { ConfigManager } from './config.manager';
 import { cloneDeep } from 'lodash';
 
 export class AppSetting {
