@@ -32,7 +32,7 @@
     }</span></pre>
 </p>
 
-  <b>How to pass the Parameter to SQL Query. </b> <br/>
+  <b>How to pass the Parameter to SQL Query</b> <br/>
   <p style="margin-left:20px">If the JSON and parameter name are same, we can pass the json object to the sql manager as below: <br/>
    let query = "INSERT INTO customers (name,address) VALUES(:Name,:Address)";<br/>
         return this.db.Insert(query, customer);  <br/>
