@@ -42,5 +42,5 @@
         this.db.addInputParameter("id", id);<br/>
         return this.db.Get(query);
  </p>  
-https://www.initpals.com/node-js/express-js-application-seed-project-with-typescript/
+https://www.initpals.com/node-js/express-js-application-seed-project-with-typescript/<br/>
 https://www.initpals.com/node-js/how-to-use-json-based-configuration-in-express-js/
