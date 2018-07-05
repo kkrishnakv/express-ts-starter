@@ -5,6 +5,23 @@
       "version": "1.0.0",
       "name": "express-api",
       "env": "development"
+    },
+    "DBConnections": {
+      "default": {
+        "user": "sa",
+        "password": "sql@123",
+        "options": {
+          "host": "localhost",
+          "database": "testdb",
+          "requestTimeout": 300000,
+          "dialect": "mssql",
+          "operatorsAliases": false,
+          "logging": true,
+          "dialectOptions": {
+            "encrypt": false
+          }
+        }
+      }
     }
   }
 }
