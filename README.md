@@ -10,7 +10,37 @@
   </p>
 </ol>
 
-<br/>
+<p>
+  Database Connectivity: <br/>
+  Sequelize is used to connect the database. The configuration is managed in config.{env}.json. The dialect options is used to configured the database server.  
+  <pre class="brush:js;toolbar:false;"><span style="color: #33cccc;">"DBConnections": {
+      "default": {
+        "user": "sa",
+        "password": "sql@123",
+        "options": {
+          "host": "localhost",
+          "database": "testdb",
+          "requestTimeout": 300000,
+          "dialect": "mssql",
+          "operatorsAliases": false,
+          "logging": true,
+          "dialectOptions": {
+            "encrypt": false
+          }
+        }
+      }
+    }</span></pre>
+</p>
+
+  <b>How to pass the Parameter to SQL Query. </b> <br/>
+  <p style="margin-left:20px">If the JSON and parameter name are same, we can pass the json object to the sql manager as below: <br/>
+   let query = "INSERT INTO customers (name,address) VALUES(:Name,:Address)";<br/>
+        return this.db.Insert(query, customer);  <br/>
+  </p>
+   <b>Adding parameter without JSON Object</b><br/>
+ <p style="margin-left:20px"> let query = "SELECT Id,Name,Address FROM customers WHERE Id=:id";<br/>
+        this.db.addInputParameter("id", id);<br/>
+        return this.db.Get(query);
+ </p>  
 https://www.initpals.com/node-js/express-js-application-seed-project-with-typescript/
-<br/>
 https://www.initpals.com/node-js/how-to-use-json-based-configuration-in-express-js/
