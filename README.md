@@ -10,8 +10,66 @@
   </p>
 </ol>
 <b>To run the project</b>
-http://localhost:40401/
+<ul>
+  <li>Clone or download</li>
+  <li>Yarn install/npm install</li>
+  <li>npm start</li>
+  <li>http://localhost:40401/</li>
+  </ul>
+
+<p>
+  <b>Confiuration for different environment </b>
+<br/>
+  <pre>
+  inside the config folder, we can add the json files for different environment. 
+  {
+  "Config": {
+    "port": 40401,
+    "appConfig": {
+      "version": "1.0.0",
+      "name": "express-api",
+      "env": "development"
+    },...
+    Configure the port db and etc...
+
   
+  IConfig.ts is an interface for the root tags to get the properties in the code. 
+  export interface IConfig {
+    appConfig: any;
+    DBConnections: any;
+    port: number;
+}
+
+To set the enviroment.
+export class AppSetting {
+
+    public static Env = <b>Environment.Dev;</b>
+
+    public static getConfig(): IConfig {
+        let configManager = new ConfigManager();
+        return cloneDeep(configManager.Config);
+    }
+}
+
+ConfigurationManager is class used to read the configuration json files using nconf. It will stored in memory for the first request and served from memory from the subsequent request.
+ nconf.use('memory');
+        if (!nconf.get('Config')) {
+            this.getFile(filename);
+        }
+        this.Config = nconf.get('Config');
+        if (!this.Config) {
+            Logger.error('Unable to read the config file');
+
+            process.exit();
+        }
+
+Configure the environment.
+export enum Environment {
+    Dev, Production, Local
+}
+
+  </pre>
+</p>
 <p>
   Database Connectivity: <br/>
   Sequelize is used to connect the database. The configuration is managed in config.{env}.json. The dialect options is used to configured the database server.  
