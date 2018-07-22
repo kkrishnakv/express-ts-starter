@@ -1,18 +1,18 @@
 {
     "name": "ejs-api",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "description": "Express API",
     "author": "krishna",
-    "main": "build/app.js",
+    "main": "build/main.js",
     "scripts": {
-        "start": "nodemon -V --exec ts-node src/main.ts",
-        "lint": "npm run tslint \"src/**/*.ts\"",
-        "tslint": "tslint",
-        "pree2e": "webdriver-manager update",
-        "build:prod": "npm run clean:dist && webpack --mode=production",
         "build:dev": "npm run clean:dist && webpack --mode=development",
+        "build:prod": "npm run clean:dist && webpack --mode=production",
+        "clean:build": "rimraf build",
         "clean:dist": "rimraf dist",
-        "clean:build": "rimraf build"
+        "lint": "npm run tslint \"src/**/*.ts\"",
+        "pree2e": "webdriver-manager update",
+        "start": "nodemon -V --exec ts-node src/main.ts",
+        "tslint": "tslint"
     },
     "keywords": [
         "typescript",
@@ -35,8 +35,11 @@
         "express": "4.16.3",
         "express-winston": "2.5.1",
         "fs": "0.0.1-security",
+        "mssql": "^4.1.0",
+        "nconf": "0.10.0",
         "path": "0.12.7",
         "rimraf": "2.6.2",
+        "sequelize": "^4.38.0",
         "ts-loader": "4.4.1",
         "ts-node": "6.1.0",
         "tslint": "5.10.0",
@@ -44,9 +47,9 @@
         "webpack": "4.12.0",
         "webpack-cli": "3.0.3",
         "webpack-node-externals": "1.7.2",
+        "swagger-ui-express": "3.0.10",
         "winston": "2.4.2",
-        "winston-daily-rotate-file": "3.2.1",
-        "nconf": "0.10.0"
+        "winston-daily-rotate-file": "3.2.1"
     },
     "devDependencies": {
         "@webpack-cli/migrate": "^0.0.8",
