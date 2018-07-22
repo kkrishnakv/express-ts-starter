@@ -9,10 +9,13 @@
    The output file name and the files to copy can be managed in webpack.config.js 
   </p>
 </ol>
-
+<b>To run the project</b>
+http://localhost:40401/
+  
 <p>
   Database Connectivity: <br/>
   Sequelize is used to connect the database. The configuration is managed in config.{env}.json. The dialect options is used to configured the database server.  
+  
   <pre class="brush:js;toolbar:false;"><span style="color: #33cccc;">"DBConnections": {
       "default": {
         "user": "sa",
@@ -48,6 +51,8 @@
     }
  </p>  
  
+ <p>http://localhost:40401/customers</b>
+ 
  <b>Integrated Swagger UI.</b> 
  Add the swagger json in swagger-docs. Ref customer.swagger.json 
  
@@ -60,7 +65,7 @@ export class SwaggerController {
 }
 
 To run the swagger example 
-hhttp://localhost:40401/swagger/customer
+http://localhost:40401/swagger/customer
 
 
 https://www.initpals.com/node-js/express-js-application-seed-project-with-typescript/<br/>
