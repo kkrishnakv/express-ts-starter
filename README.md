@@ -48,7 +48,7 @@
     }
  </p>  
  
- Integrated Swagger UI. 
+ <b>Integrated Swagger UI.</b> 
  Add the swagger json in swagger-docs. Ref customer.swagger.json 
  
  Swagger.controller.ts for adding the swagger routes.
