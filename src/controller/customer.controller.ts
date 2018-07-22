@@ -24,6 +24,7 @@ export class CustomerController {
 
     public getCustomerById(request: Request, response: Response, next: NextFunction) {
         let manager = new CustomerManager();
+        console.log('customer by id ', request.params);
         let id = parseInt(request.params['id'], 0);
         manager.getCustomer(id).then((result) => {
             return Api.ok(request, response, result[0]);
