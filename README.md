@@ -19,9 +19,10 @@
 
 <p>
   <b>Confiuration for different environment </b>
-<br/>
+
   <pre>
-  inside the config folder, we can add the json files for different environment. 
+ 
+we can add the json files for different environment /config/config.dev.json. 
   {
   "Config": {
     "port": 40401,
@@ -30,10 +31,10 @@
       "name": "express-api",
       "env": "development"
     },...
-    Configure the port db and etc...
+    
+ Configure the port db and etc...
 
-  
-  IConfig.ts is an interface for the root tags to get the properties in the code. 
+IConfig.ts is an interface for the root tags to get the properties in the code. 
   export interface IConfig {
     appConfig: any;
     DBConnections: any;
@@ -41,32 +42,32 @@
 }
 
 To set the enviroment.
-export class AppSetting {
+    export class AppSetting {
 
-    public static Env = <b>Environment.Dev;</b>
+        public static Env = <b>Environment.Dev;</b>
 
-    public static getConfig(): IConfig {
-        let configManager = new ConfigManager();
-        return cloneDeep(configManager.Config);
+        public static getConfig(): IConfig {
+            let configManager = new ConfigManager();
+            return cloneDeep(configManager.Config);
+        }
     }
-}
 
 ConfigurationManager is class used to read the configuration json files using nconf. It will stored in memory for the first request and served from memory from the subsequent request.
- nconf.use('memory');
-        if (!nconf.get('Config')) {
-            this.getFile(filename);
-        }
-        this.Config = nconf.get('Config');
-        if (!this.Config) {
-            Logger.error('Unable to read the config file');
+     nconf.use('memory');
+            if (!nconf.get('Config')) {
+                this.getFile(filename);
+            }
+            this.Config = nconf.get('Config');
+            if (!this.Config) {
+                Logger.error('Unable to read the config file');
 
-            process.exit();
-        }
+                process.exit();
+            }
 
 Configure the environment.
-export enum Environment {
-    Dev, Production, Local
-}
+    export enum Environment {
+        Dev, Production, Local
+    }
 
   </pre>
 </p>
