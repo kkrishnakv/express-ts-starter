@@ -4,14 +4,6 @@
     "description": "Express API",
     "author": "krishna",
     "main": "build/main.js",
-    "keywords": [
-        "typescript",
-        "mocha",
-        "sourcemaps",
-        "node",
-        "npm scripts",
-        "tsc"
-    ],
     "scripts": {
         "build:dev": "npm run clean:dist && webpack --mode=development",
         "build:prod": "npm run clean:dist && webpack --mode=production",
@@ -22,6 +14,14 @@
         "start": "nodemon -V --exec ts-node src/main.ts",
         "tslint": "tslint"
     },
+    "keywords": [
+        "typescript",
+        "mocha",
+        "sourcemaps",
+        "node",
+        "npm scripts",
+        "tsc"
+    ],
     "dependencies": {
         "@types/body-parser": "1.17.0",
         "@types/compression": "0.0.36",
