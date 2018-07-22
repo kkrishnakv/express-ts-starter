@@ -1,0 +1,164 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Customer",
+        "description": "",
+        "version": "1.0"
+    },
+    "produces": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "Customer",
+            "description": ""
+        }
+    ],
+    "host": "",
+    "basePath": "/Customers",
+    "paths": {
+        "/": {
+            "get": {
+                "tags": [
+                    "customer"
+                ],
+                "description": "Display all the customers",
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "customer"
+                ],
+                "description": "Add a new customer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "required": true,
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Payload for adding new",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/customer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "customer"
+                ],
+                "description": "Update an existing customer",
+                "required": true,
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "To add a update a customer, provide the existing Id",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/customer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/{id}": {
+            "get": {
+                "tags": [
+                    "Customer"
+                ],
+                "description": "Get customer by Id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Customer"
+                ],
+                "description": "Delete a customer by Id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "customer": {
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "number",
+                    "format": "int64"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "Address": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

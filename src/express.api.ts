@@ -9,6 +9,7 @@ import { Logger } from './helpers/logger';
 import { ApiRouting } from './api.routing';
 import { Api } from './helpers/api';
 import { IConfig, AppSetting } from './config';
+import { SwaggerController } from './controller/swagger.controller';
 
 export class ExpressApi {
     public app: express.Express;
@@ -60,6 +61,7 @@ export class ExpressApi {
         });
 
         ApiRouting.ConfigureRouters(this.app);
+        SwaggerController.configure(this.app);
     }
 
     private errorHandler() {
