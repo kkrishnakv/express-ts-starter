@@ -18,12 +18,12 @@
         "user": "sa",
         "password": "sql@123",
         "options": {
-          "host": "localhost",
-          "database": "testdb",
+          "host": "localhost", // server name
+          "database": "testdb", // database name
           "requestTimeout": 300000,
           "dialect": "mssql",
           "operatorsAliases": false,
-          "logging": true,
+          "logging": true, //Enable the sequelize logger for queries for dev mode.
           "dialectOptions": {
             "encrypt": false
           }
@@ -34,13 +34,34 @@
 
   <b>How to pass the Parameter to SQL Query</b> <br/>
   <p style="margin-left:20px">If the JSON and parameter name are same, we can pass the json object to the sql manager as below: <br/>
-   let query = "INSERT INTO customers (name,address) VALUES(:Name,:Address)";<br/>
-        return this.db.Insert(query, customer);  <br/>
+        public addCustomer(customer: ICustomer) {
+        let query = "INSERT INTO customers (name,address) VALUES(:Name,:Address)";
+        return this.db.Insert(query, customer);
+    }
   </p>
    <b>Adding parameter without JSON Object</b><br/>
- <p style="margin-left:20px"> let query = "SELECT Id,Name,Address FROM customers WHERE Id=:id";<br/>
-        this.db.addInputParameter("id", id);<br/>
-        return this.db.Get(query);
+ <p style="margin-left:20px"> 
+  public deleteCustomer(id) {
+        let query = "DELETE FROM customers WHERE Id=:id";
+        this.db.addInputParameter("id", id);
+        return this.db.Delete(query);
+    }
  </p>  
+ 
+ Integrated Swagger UI. 
+ Add the swagger json in swagger-docs. Ref customer.swagger.json 
+ 
+ Swagger.controller.ts for adding the swagger routes.
+export class SwaggerController {
+
+    public static configure(app: Express) {
+        app.use('/swagger/customer', swaggerUi.serve, swaggerUi.setup(customer)); //route for the swagger ui
+    }
+}
+
+To run the swagger example 
+hhttp://localhost:40401/swagger/customer
+
+
 https://www.initpals.com/node-js/express-js-application-seed-project-with-typescript/<br/>
 https://www.initpals.com/node-js/how-to-use-json-based-configuration-in-express-js/
