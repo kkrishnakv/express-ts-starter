@@ -1,5 +1,27 @@
 {
+    "name": "ejs-api",
+    "version": "3.0.0",
+    "description": "Express API",
     "author": "krishna",
+    "main": "build/main.js",
+    "keywords": [
+        "typescript",
+        "mocha",
+        "sourcemaps",
+        "node",
+        "npm scripts",
+        "tsc"
+    ],
+    "scripts": {
+        "build:dev": "npm run clean:dist && webpack --mode=development",
+        "build:prod": "npm run clean:dist && webpack --mode=production",
+        "clean:build": "rimraf build",
+        "clean:dist": "rimraf dist",
+        "lint": "npm run tslint \"src/**/*.ts\"",
+        "pree2e": "webdriver-manager update",
+        "start": "nodemon -V --exec ts-node src/main.ts",
+        "tslint": "tslint"
+    },
     "dependencies": {
         "@types/body-parser": "1.17.0",
         "@types/compression": "0.0.36",
@@ -29,31 +51,9 @@
         "winston": "2.4.2",
         "winston-daily-rotate-file": "3.2.1"
     },
-    "description": "Express API",
     "devDependencies": {
         "@webpack-cli/migrate": "^0.0.8",
         "nodemon": "1.17.5",
         "webdriver-manager": "12.0.6"
-    },
-    "keywords": [
-        "typescript",
-        "mocha",
-        "sourcemaps",
-        "node",
-        "npm scripts",
-        "tsc"
-    ],
-    "main": "build/app.js",
-    "name": "ejs-api",
-    "scripts": {
-        "build:dev": "npm run clean:dist && webpack --mode=development",
-        "build:prod": "npm run clean:dist && webpack --mode=production",
-        "clean:build": "rimraf build",
-        "clean:dist": "rimraf dist",
-        "lint": "npm run tslint \"src/**/*.ts\"",
-        "pree2e": "webdriver-manager update",
-        "start": "nodemon -V --exec ts-node src/main.ts",
-        "tslint": "tslint"
-    },
-    "version": "1.0.0"
+    }
 }
