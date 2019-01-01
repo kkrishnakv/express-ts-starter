@@ -1,5 +1,7 @@
 export interface IConfig {
     appConfig: any;
-    DBConnections: any;
+    dbConnections: any;
     port: number;
+    appSettings: any;
+    oktaConfig: any;
 }
