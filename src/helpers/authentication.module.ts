@@ -35,11 +35,11 @@ export class AuthenticationModule {
                 next();
             } else {
                 if (auth) {
-                    let valid = await AuthenticationModule.validateOkta(config, auth, req, res, next);
-                    if (valid) {
+                    let result = await AuthenticationModule.validateOkta(config, auth, req, res, next);
+                    if (result['valid']) {
                         next();
                     } else {
-                        return Api.unauthorized(res, res, 'Invalid Token');
+                        return Api.unauthorized(res, res, result['error']);
                     }
                 } else {
                     return Api.unauthorized(req, res, 'Invalid Token');
@@ -59,14 +59,14 @@ export class AuthenticationModule {
             oktaJwtVerifier.verifyAccessToken(token)
                 .then(jwt => {
                     AuthenticationModule.setHeader(jwt.claims, req);
-                    resolve(true);
+                    resolve({ valid: true, error: '' });
                 }, (error) => {
                     // Api.unauthorized(req, res, error);
-                    reject(false);
+                    resolve({ valid: false, error: error });
                 })
                 .catch(err => {
                     // Api.unauthorized(req, res, err);
-                    reject(false);
+                    resolve({ valid: false, error: err });
                 });
         });
 
