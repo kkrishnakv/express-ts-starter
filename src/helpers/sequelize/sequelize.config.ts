@@ -5,7 +5,7 @@ export class SequelizeConfig {
     private sequelize: SqlConnection.Sequelize;
     public setConnection() {
         const config: IConfig = AppSetting.getConfig();
-        const dbInfo = config.DBConnections['default'];
+        const dbInfo = config.dbConnections['default'];
         let options = dbInfo.options;
         options['logging'] = console.log;
         this.sequelize = new SqlConnection(dbInfo.database, dbInfo.user, dbInfo.password, options);

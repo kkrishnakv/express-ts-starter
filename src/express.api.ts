@@ -10,6 +10,7 @@ import { ApiRouting } from './api.routing';
 import { Api } from './helpers/api';
 import { IConfig, AppSetting } from './config';
 import { SwaggerController } from './controller/swagger.controller';
+import { AuthenticationModule } from './helpers/authentication.module';
 
 export class ExpressApi {
     public app: express.Express;
@@ -35,6 +36,7 @@ export class ExpressApi {
         this.app.use(json({ limit: '50mb' }));
         this.app.use(compression());
         this.app.use(urlencoded({ limit: '50mb', extended: true }));
+        AuthenticationModule.authenticate(this.app);
         Logger.configureLogger(this.app);
     }
 
