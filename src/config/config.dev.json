@@ -6,7 +6,16 @@
       "name": "express-api",
       "env": "development"
     },
-    "DBConnections": {
+    "appSettings": {
+      "excludedUrl": [
+        "info"
+      ]
+    },
+    "oktaConfig": {
+      "url": "https://dev-142636.oktapreview.com/oauth2/",
+      "clientId": "0oaftm7u6dtkJOlXp0h7"
+    },
+    "dbConnections": {
       "default": {
         "user": "sa",
         "password": "sql@123",

@@ -1,3 +1,3 @@
 export enum Environment {
-    Dev, Production, Local
+    Dev, Production, Local, Testing
 }
