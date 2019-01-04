@@ -125,7 +125,26 @@ export class SwaggerController {
 
 To run the swagger example 
 http://localhost:40401/swagger/customer
+Authentication module using OKTA. 
+* The API URL Can be excluded in the configuration file.
+* Decode and Retrieve the Username & Email  from the token.
+* Validate the JWT Token against the Client ID.
+* Display the Base API Path information without authentication.
 
+Update the values in the configuration 
+"appSettings": {
+      "excludedUrl": [
+        "info"
+      ]
+    },
+    "oktaConfig": {
+      "url": "https://dev-142636.oktapreview.com/oauth2/",
+      "clientId": ""
+    },
+
+excludedUrl - used to view the API without authentication. 
+url - The Okta URL for validating. 
+clientId- The client id used in the Angular App.
 
 https://www.initpals.com/node-js/express-js-application-seed-project-with-typescript/<br/>
 https://www.initpals.com/node-js/how-to-use-json-based-configuration-in-express-js/
