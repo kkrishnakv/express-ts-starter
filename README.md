@@ -143,9 +143,9 @@ Update the values in the configuration
                   "clientId": ""
     },
 
-excludedUrl - used to view the API without authentication. 
-url - OKTA Issuer URL. 
-clientId- The client id used in the Angular App.
+excludedUrl - used to view the API without authentication. <br/>
+url - OKTA Issuer URL. <br/>
+clientId- The client id used in the Angular App.<br/>
 
 https://www.initpals.com/node-js/express-js-application-seed-project-with-typescript/<br/>
 https://www.initpals.com/node-js/how-to-use-json-based-configuration-in-express-js/
