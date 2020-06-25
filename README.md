@@ -18,7 +18,7 @@
   </ul>
 
 <p>
-  <b>Confiuration for different environment </b>
+  <b>Configuration for different environment based on the json file </b>
 
   <pre>
  
