@@ -143,7 +143,7 @@ Update the values in the configuration
                   "clientId": ""
     },
 
-excludedUrl - used to view the API without authentication. <br/>
+excludedUrl - Exclude the route from the authentication. <br/>
 url - OKTA Issuer URL. <br/>
 clientId- The client id used in the Angular App.<br/>
 
