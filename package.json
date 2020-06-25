@@ -41,7 +41,7 @@
         "nconf": "0.10.0",
         "path": "0.12.7",
         "rimraf": "2.6.2",
-        "sequelize": "^4.38.0",
+        "sequelize": "^5.15.1",
         "swagger-ui-express": "3.0.10",
         "ts-loader": "4.4.1",
         "ts-node": "6.1.0",
