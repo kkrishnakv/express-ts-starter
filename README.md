@@ -122,9 +122,10 @@ export class SwaggerController {
         app.use('/swagger/customer', swaggerUi.serve, swaggerUi.setup(customer)); //route for the swagger ui
     }
 }
-
+<pre>
 To run the swagger example 
 http://localhost:40401/swagger/customer
+
 Authentication module using OKTA. 
 * The API URL Can be excluded in the configuration file.
 * Decode and Retrieve the Username & Email  from the token.
@@ -132,7 +133,7 @@ Authentication module using OKTA.
 * Display the Base API Path information without authentication.
 
 Update the values in the configuration 
-
+</pre>
 "appSettings": {
       "excludedUrl": [
               "info"
