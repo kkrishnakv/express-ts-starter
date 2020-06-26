@@ -1,115 +1,110 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import { json, urlencoded } from 'body-parser';
+import { Request, Response, NextFunction } from "express";
+import { json, urlencoded } from "body-parser";
+import * as compression from "compression";
+import * as express from "express";
+import * as http from "http";
 
-import * as http from 'http';
-import * as compression from 'compression';
-import * as express from 'express';
-
-import { Logger } from './helpers/logger';
-import { ApiRouting } from './api.routing';
-import { Api } from './helpers/api';
-import { IConfig, AppSetting } from './config';
-import { SwaggerController } from './controller/swagger.controller';
-import { AuthenticationModule } from './helpers/authentication.module';
+import { Logger } from "./helpers/logger";
+import { ApiRouting } from "./api.routing";
+import { Api } from "./helpers/api";
+import { IConfig, AppSetting } from "./config";
+import { SwaggerController } from "./controller/swagger.controller";
+import { AuthenticationModule } from "./helpers/authentication.module";
 
 export class ExpressApi {
-    public app: express.Express;
-    private router: express.Router;
-    private config: IConfig;
+  public app: express.Express;
+  private router: express.Router;
+  private config: IConfig;
 
+  constructor() {
+    this.app = express();
+    this.router = express.Router();
+    this.config = AppSetting.getConfig();
+    this.configure();
+  }
 
-    constructor() {
-        this.app = express();
-        this.router = express.Router();
-        this.config = AppSetting.getConfig();
-        this.configure();
-    }
+  private configure() {
+    this.configureMiddleware();
+    this.configureBaseRoute();
+    this.configureRoutes();
+    this.errorHandler();
+  }
 
-    private configure() {
-        this.configureMiddleware();
-        this.configureBaseRoute();
-        this.configureRoutes();
-        this.errorHandler();
-    }
+  private configureMiddleware() {
+    this.app.use(json({ limit: "50mb" }));
+    this.app.use(compression());
+    this.app.use(urlencoded({ limit: "50mb", extended: true }));
+    AuthenticationModule.authenticate(this.app);
+    Logger.configureLogger();
+  }
 
-    private configureMiddleware() {
-        this.app.use(json({ limit: '50mb' }));
-        this.app.use(compression());
-        this.app.use(urlencoded({ limit: '50mb', extended: true }));
-        AuthenticationModule.authenticate(this.app);
-        Logger.configureLogger(this.app);
-    }
+  private configureBaseRoute() {
+    this.app.use((request, res, next) => {
+      const config = AppSetting.getConfig();
+      if (request.url === "/") {
+        return res.json(config.appConfig);
+      } else {
+        next();
+      }
+    });
+    this.app.use("/", this.router);
+  }
 
-    private configureBaseRoute() {
-        this.app.use(function (req, res, next) {
-            let config = AppSetting.getConfig();
-            if (req.url === '/') {
-                return res.json(config.appConfig);
-            } else {
-                next();
-            }
-        });
-        this.app.use('/', this.router);
-    }
-
-    private configureRoutes() {
-        this.app.use(function (req: Request, res: Response, next: NextFunction) {
-            for (let key in req.query) {
-                if (key) {
-                    req.query[key.toLowerCase()] = req.query[key];
-                }
-            }
-            next();
-        });
-
-        ApiRouting.ConfigureRouters(this.app);
-        SwaggerController.configure(this.app);
-    }
-
-    private errorHandler() {
-        this.app.use(function (err, req, res, next) {
-            if (req.body) {
-                Logger.error(req.body);
-            }
-            Logger.error(err);
-            Api.serverError(req, res, err);
-        });
-
-        // catch 404 and forward to error handler
-        this.app.use(function (req, res, next) {
-            Api.notFound(req, res);
-        });
-    }
-
-
-    public run() {
-        let server = http.createServer(this.app);
-        server.listen(this.config.port);
-        server.on('error', this.onError);
-    }
-
-    private onError(error) {
-        let port = this.config.port;
-        if (error.syscall !== 'listen') {
-            throw error;
+  private configureRoutes() {
+    this.app.use((request: Request, res: Response, next: NextFunction) => {
+      for (const key in request.query) {
+        if (key) {
+          request.query[key.toLowerCase()] = request.query[key];
         }
+      }
+      next();
+    });
 
-        const bind = typeof port === 'string'
-            ? 'Pipe ' + port
-            : 'Port ' + port;
+    ApiRouting.ConfigureRouters(this.app);
+    SwaggerController.configure(this.app);
+  }
 
-        // handle specific listen errors with friendly messages
-        switch (error.code) {
-            case 'EACCES':
-                console.error(bind + ' requires elevated privileges');
-                process.exit(1);
-                break;
-            case 'EADDRINUSE':
-                console.error(bind + ' is already in use');
-                process.exit(1);
-                break;
-            default:
-                throw error;
-        }
+  private errorHandler() {
+    this.app.use((error, request: Request, res) => {
+      if (request.body) {
+        Logger.error(request.body);
+      }
+      Logger.error(error);
+      Api.serverError(request, res, error);
+    });
+
+    // catch 404 and forward to error handler
+    this.app.use((request, res) => {
+      Api.notFound(request, res);
+    });
+  }
+
+  public run() {
+    const server = http.createServer(this.app);
+    server.listen(this.config.port);
+    server.on("error", this.onError);
+  }
+
+  private onError(error) {
+    const port = this.config.port;
+    if (error.syscall !== "listen") {
+      throw error;
     }
+
+    const bind = typeof port === "string" ? `Pipe ${port}` : `Port ${port}`;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+      case "EACCES":
+        console.error(`${bind} requires elevated privileges`);
+        process.exit(1);
+        break;
+      case "EADDRINUSE":
+        console.error(`${bind} is already in use`);
+        process.exit(1);
+        break;
+      default:
+        throw error;
+    }
+  }
 }

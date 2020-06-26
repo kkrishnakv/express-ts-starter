@@ -1,9 +1,9 @@
-import * as express from 'express';
-import { CustomerController } from './controller/customer.controller';
-import { Api } from './helpers';
-export class ApiRouting {
+import * as express from "express";
 
-    public static ConfigureRouters(app: express.Router) {
-        app.use(CustomerController.route, new CustomerController().router);
-    }
+import { CustomerController } from "./controller/customer.controller";
+
+export class ApiRouting {
+  public static ConfigureRouters(app: express.Router): any {
+    app.use(CustomerController.route, new CustomerController().router);
+  }
 }

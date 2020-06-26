@@ -1,21 +1,23 @@
-import { AppSetting, IConfig } from "../../config";
 import { Sequelize } from "sequelize";
+
+import { AppSetting, IConfig } from "../../config";
+
 export class SequelizeConfig {
   private sequelize: Sequelize;
-  public setConnection() {
+  public setConnection(): void {
     const config: IConfig = AppSetting.getConfig();
-    const dbInfo = config.dbConnections["default"];
-    let options = dbInfo.options;
-    options["logging"] = console.log;
+    const databaseInfo = config.dbConnections.default;
+    const options = databaseInfo.options;
+    options.logging = console.log;
     this.sequelize = new Sequelize(
-      dbInfo.database,
-      dbInfo.user,
-      dbInfo.password,
+      databaseInfo.database,
+      databaseInfo.user,
+      databaseInfo.password,
       options
     );
   }
 
-  public getSequelize() {
+  public getSequelize(): Sequelize {
     return this.sequelize;
   }
 }
