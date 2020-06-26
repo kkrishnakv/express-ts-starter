@@ -7,9 +7,7 @@
       "env": "development"
     },
     "appSettings": {
-      "excludedUrl": [
-        "info"
-      ]
+      "excludedUrl": ["/info", "/customers", "/swagger"]
     },
     "oktaConfig": {
       "url": "https://dev-142636.oktapreview.com/oauth2/",
@@ -21,10 +19,9 @@
         "password": "sql@123",
         "options": {
           "host": "localhost",
-          "database": "testdb",
+          "database": "AdventureWorks",
           "requestTimeout": 300000,
           "dialect": "mssql",
-          "operatorsAliases": false,
           "logging": true,
           "dialectOptions": {
             "encrypt": false
