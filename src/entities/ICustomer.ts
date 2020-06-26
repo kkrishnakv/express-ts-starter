@@ -1,5 +1,5 @@
 export interface ICustomer {
-    Id: number;
-    Name: string;
-    Address: string;
+  Id: number;
+  Name: string;
+  Address: string;
 }
