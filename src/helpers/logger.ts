@@ -10,7 +10,9 @@ export class Logger {
 
   private static CreateLogFolderIfNotExists() {
     // ensure log directory exists
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
     if (!fs.existsSync(this.logDirectory)) {
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
       fs.mkdirSync(this.logDirectory);
     }
   }

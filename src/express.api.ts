@@ -54,6 +54,7 @@ export class ExpressApi {
     this.app.use((request: Request, res: Response, next: NextFunction) => {
       for (const key in request.query) {
         if (key) {
+          // eslint-disable-next-line security/detect-object-injection
           request.query[key.toLowerCase()] = request.query[key];
         }
       }
