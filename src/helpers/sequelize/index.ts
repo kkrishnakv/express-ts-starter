@@ -1,2 +1,2 @@
-export * from './sql.manager';
-export * from './sequelize.config';
+export * from "./sql.manager";
+export * from "./sequelize.config";

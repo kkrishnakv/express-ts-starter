@@ -1,91 +1,91 @@
-import { find } from 'lodash';
-import { IConfig, AppSetting, Environment } from '../config';
-import { Api } from './api';
-import { Router, Request, Response, NextFunction, Express } from 'express';
-const OktaJwtVerifier = require('@okta/jwt-verifier');
-const jwtWeb = require('jsonwebtoken');
+import { find } from "lodash";
+import { Request, Express } from "express";
+
+import { IConfig, AppSetting, Environment } from "../config";
+
+import { Api } from "./api";
+
+import OktaJwtVerifier = require("@okta/jwt-verifier");
 export class AuthenticationModule {
+  public static isExcluded(request) {
+    const config: IConfig = AppSetting.getConfig();
 
-    public static isExcluded(req, res) {
+    const exclude = config.appSettings.excludedUrl;
+    const result = find(exclude, (s) => {
+      return request.url.startsWith(s);
+    });
+    // To exclude authentication for swagger in dev mode
+    const reference = request.headers.referer ? request.headers.referer : "";
+    const testing =
+      AppSetting.Env === Environment.Dev && reference.includes("swagger");
+    return testing || result;
+  }
 
-        let config: IConfig = AppSetting.getConfig();
-
-        let exclude = config.appSettings['excludedUrl'];
-        let result = find(exclude, (s) => {
-
-            return req.url.startsWith(s);
+  public static authenticate(app: Express) {
+    app.use(async (request, res, next) => {
+      const config = AppSetting.getConfig();
+      const auth = request.headers["x-access-token"] || request.query.token;
+      if (request.url === "/") {
+        return res.json({
+          name: config.appConfig.name,
+          version: config.appConfig.version,
         });
-        // To exclude authentication for swagger in dev mode
-        let ref = req.headers['referer'] ? req.headers['referer'] : '';
-        let testing = AppSetting.Env === Environment.Dev && ref.indexOf('swagger') !== -1;
-        return testing || result;
-    }
-
-    public static authenticate(app: Express) {
-        let authenticModule = new AuthenticationModule();
-        app.use(async (req, res, next) => {
-            let config = AppSetting.getConfig();
-            let auth = req.headers['x-access-token'] || req.query['token'];
-            if (req.url === '/') {
-                return res.json({
-                    name: config.appConfig.name,
-                    version: config.appConfig.version,
-                });
-            } else if (AuthenticationModule.isExcluded(req, res)) {
-                next();
-            } else {
-                if (auth) {
-                    let result = await AuthenticationModule.validateOkta(config, auth, req, res, next);
-                    if (result['valid']) {
-                        next();
-                    } else {
-                        return Api.unauthorized(res, res, result['error']);
-                    }
-                } else {
-                    return Api.unauthorized(req, res, 'Invalid Token');
-                }
-            }
-        });
-
-    }
-
-
-    public static async validateOkta(config: IConfig, token, req: Request, res: Response, next: NextFunction) {
-        const oktaJwtVerifier = new OktaJwtVerifier({
-            issuer: config.oktaConfig.url,
-            clientId: config.oktaConfig.clientId
-        });
-        return new Promise((resolve, reject) => {
-            oktaJwtVerifier.verifyAccessToken(token)
-                .then(jwt => {
-                    AuthenticationModule.setHeader(jwt.claims, req);
-                    resolve({ valid: true, error: '' });
-                }, (error) => {
-                    // Api.unauthorized(req, res, error);
-                    resolve({ valid: false, error: error });
-                })
-                .catch(err => {
-                    // Api.unauthorized(req, res, err);
-                    resolve({ valid: false, error: err });
-                });
-        });
-
-    }
-
-
-    private static setHeader(claims, req) {
-        if (!claims) {
-            return null;
+      } else if (AuthenticationModule.isExcluded(request)) {
+        next();
+      } else if (auth) {
+        const result = await AuthenticationModule.validateOkta(
+          config,
+          auth,
+          request
+        );
+        if (result.valid) {
+          next();
+        } else {
+          return Api.unauthorized(res, res, result.error);
         }
-        let userid = claims ? claims.preferred_username : null;
-        let email = claims ? claims.email : null;
-        let name = claims ? claims.name : null;
-        let id = userid.split('@');
-        id = id ? id[0] : null;
-        req.headers['user'] = id;
-        req.headers['user-email'] = email;
-        req.headers['user-name'] = name;
-        return id;
-    }
+      } else {
+        return Api.unauthorized(request, res, "Invalid Token");
+      }
+    });
+  }
 
+  public static async validateOkta(config: IConfig, token, request: Request) {
+    const oktaJwtVerifier = new OktaJwtVerifier({
+      issuer: config.oktaConfig.url,
+      clientId: config.oktaConfig.clientId,
+    });
+    return new Promise((resolve) => {
+      oktaJwtVerifier
+        .verifyAccessToken(token)
+        .then(
+          (jwt) => {
+            AuthenticationModule.setHeader(jwt.claims, request);
+            resolve({ valid: true, error: "" });
+          },
+          (error) => {
+            // Api.unauthorized(req, res, error);
+            resolve({ valid: false, error });
+          }
+        )
+        .catch((error) => {
+          // Api.unauthorized(req, res, err);
+          resolve({ valid: false, error: error });
+        });
+    });
+  }
+
+  private static setHeader(claims, request) {
+    if (!claims) {
+      return null;
+    }
+    const userid = claims ? claims.preferred_username : null;
+    const email = claims ? claims.email : null;
+    const name = claims ? claims.name : null;
+    let id = userid.split("@");
+    id = id ? id[0] : null;
+    request.headers.user = id;
+    request.headers["user-email"] = email;
+    request.headers["user-name"] = name;
+    return id;
+  }
 }

@@ -1,7 +1,7 @@
-import { Logger } from "../../helpers/logger";
-import { sequelize, SequelizeConfig } from "./sequelize.config";
 import { QueryTypes } from "sequelize";
 import * as SqlConnection from "sequelize";
+
+import { sequelize } from "./sequelize.config";
 
 export class SqlManager {
   private _sequelize: SqlConnection.Sequelize;
@@ -11,64 +11,64 @@ export class SqlManager {
     this._sequelize = sequelize.getSequelize();
   }
 
-  public addInputParameter(paramName: string, value: any) {
-    if (this.params == null) {
+  public addInputParameter(parameterName: string, value: any): void {
+    if (this.params == undefined) {
       this.params = {};
     }
-    this.params[paramName] = value;
+    this.params[parameterName] = value;
   }
 
-  public ExecuteQuery(qry: string) {
+  public ExecuteQuery(qry: string): Promise<any> {
     return this._sequelize.query(qry, {
-      type: QueryTypes.SELECT
+      type: QueryTypes.SELECT,
     });
   }
 
-  public Get(qry: string, vals: any = null) {
-    let param = this.params ? this.params : vals;
+  public Get(qry: string, vals: any = null): Promise<any> {
+    const parameter = this.params ? this.params : vals;
     return this._sequelize.query(
       {
         query: qry,
-        values: param
+        values: parameter,
       },
       { type: QueryTypes.SELECT }
     );
   }
 
-  public Insert(qry: string, vals: any = null) {
-    let param = this.params ? this.params : vals;
+  public Insert(qry: string, vals: any = null): Promise<any> {
+    const parameter = this.params ? this.params : vals;
     return this._sequelize.query(
       {
         query: qry,
-        values: param
+        values: parameter,
       },
       { type: QueryTypes.INSERT }
     );
   }
 
-  public Update(qry: string, vals: any = null) {
-    let param = this.params ? this.params : vals;
+  public Update(qry: string, vals: any = null): Promise<any> {
+    const parameter = this.params ? this.params : vals;
     return this._sequelize.query(
       {
         query: qry,
-        values: param
+        values: parameter,
       },
       { type: QueryTypes.UPDATE }
     );
   }
 
-  public Delete(qry: string, vals: any = null) {
-    let param = this.params ? this.params : vals;
+  public Delete(qry: string, vals: any = null): Promise<any> {
+    const parameter = this.params ? this.params : vals;
     return this._sequelize.query(
       {
         query: qry,
-        values: param
+        values: parameter,
       },
       { type: QueryTypes.DELETE }
     );
   }
 
-  public Ping() {
+  public Ping(): Promise<void> {
     return this._sequelize.authenticate();
   }
 }
