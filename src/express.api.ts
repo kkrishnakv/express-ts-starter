@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import { json, urlencoded } from "body-parser";
 import * as compression from "compression";
 import * as express from "express";
 import * as http from "http";
 
-import { Logger } from "./helpers/logger";
+import { AppLogger } from "./helpers/app-logger";
 import { ApiRouting } from "./api.routing";
 import { Api } from "./helpers/api";
 import { IConfig, AppSetting } from "./config";
@@ -35,7 +35,7 @@ export class ExpressApi {
     this.app.use(compression());
     this.app.use(urlencoded({ limit: "50mb", extended: true }));
     AuthenticationModule.authenticate(this.app);
-    Logger.configureLogger();
+    AppLogger.configureLogger();
   }
 
   private configureBaseRoute() {
@@ -66,13 +66,21 @@ export class ExpressApi {
   }
 
   private errorHandler() {
-    this.app.use((error, request: Request, res) => {
-      if (request.body) {
-        Logger.error(request.body);
+    this.app.use(
+      (
+        error: ErrorRequestHandler,
+        request: Request,
+        res: Response,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        next: NextFunction
+      ) => {
+        if (request.body) {
+          AppLogger.error("Payload", JSON.stringify(request.body));
+        }
+        AppLogger.error("Error", error);
+        Api.serverError(request, res, error);
       }
-      Logger.error(error);
-      Api.serverError(request, res, error);
-    });
+    );
 
     // catch 404 and forward to error handler
     this.app.use((request, res) => {
@@ -83,11 +91,12 @@ export class ExpressApi {
   public run() {
     const server = http.createServer(this.app);
     server.listen(this.config.port);
+    AppLogger.info("Starting", this.config.port);
     server.on("error", this.onError);
   }
 
   private onError(error) {
-    const port = this.config.port;
+    const port = AppSetting.getConfig().port;
     if (error.syscall !== "listen") {
       throw error;
     }
