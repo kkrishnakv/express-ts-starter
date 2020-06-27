@@ -1,4 +1,4 @@
-import { Logger } from "../helpers";
+import { AppLogger } from "../helpers";
 
 import { IConfig } from "./i-config";
 import { AppSetting } from "./app.setting";
@@ -21,7 +21,7 @@ export class ConfigManager {
         filename = "config.prod.json";
         break;
       default:
-        Logger.error("Unable to read the config file");
+        AppLogger.error("Unable to read the config file");
         process.exit();
         break;
     }
@@ -31,7 +31,7 @@ export class ConfigManager {
     }
     this.Config = nconf.get("Config");
     if (!this.Config) {
-      Logger.error("Unable to read the config file");
+      AppLogger.error("Unable to read the config file");
 
       process.exit(1);
     }

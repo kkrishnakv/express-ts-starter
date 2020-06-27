@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 
 import { Api } from "../helpers";
 import { CustomerManager } from "../data-manager/customer.manager";
+import { AppLogger } from "../helpers/app-logger";
 
 export class CustomerController {
   public static route = "/customers";
@@ -22,6 +23,7 @@ export class CustomerController {
     const manager = new CustomerManager();
     manager.getCustomers().then(
       (result) => {
+        AppLogger.info(typeof this, "test");
         return Api.ok(request, response, result);
       },
       (error) => {

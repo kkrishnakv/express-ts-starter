@@ -17,7 +17,8 @@ export class AuthenticationModule {
     // To exclude authentication for swagger in dev mode
     const reference = request.headers.referer ? request.headers.referer : "";
     const testing =
-      AppSetting.Env === Environment.Dev && reference.includes("swagger");
+      AppSetting.Env === Environment.Development &&
+      reference.includes("swagger");
     return testing || result;
   }
 
@@ -49,7 +50,11 @@ export class AuthenticationModule {
     });
   }
 
-  public static async validateOkta(config: IConfig, token, request: Request) {
+  public static async validateOkta(
+    config: IConfig,
+    token,
+    request: Request
+  ): Promise<any> {
     const oktaJwtVerifier = new OktaJwtVerifier({
       issuer: config.oktaConfig.url,
       clientId: config.oktaConfig.clientId,
@@ -74,9 +79,9 @@ export class AuthenticationModule {
     });
   }
 
-  private static setHeader(claims, request) {
+  private static setHeader(claims, request): void {
     if (!claims) {
-      return null;
+      return;
     }
     const userid = claims ? claims.preferred_username : null;
     const email = claims ? claims.email : null;
@@ -86,6 +91,5 @@ export class AuthenticationModule {
     request.headers.user = id;
     request.headers["user-email"] = email;
     request.headers["user-name"] = name;
-    return id;
   }
 }
