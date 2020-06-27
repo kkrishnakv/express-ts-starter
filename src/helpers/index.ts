@@ -1,2 +1,2 @@
-export * from "./logger";
+export * from "./app-logger";
 export * from "./api";
