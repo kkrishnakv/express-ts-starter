@@ -21,7 +21,7 @@ export class ConfigManager {
         filename = "config.prod.json";
         break;
       default:
-        AppLogger.error("Unable to read the config file");
+        AppLogger.error("config", "Unable to read the config file");
         process.exit();
         break;
     }
@@ -31,7 +31,7 @@ export class ConfigManager {
     }
     this.Config = nconf.get("Config");
     if (!this.Config) {
-      AppLogger.error("Unable to read the config file");
+      AppLogger.error("config", "Unable to read the config file");
 
       process.exit(1);
     }

@@ -5,21 +5,16 @@ import * as express from "express";
 import * as http from "http";
 
 import { AppLogger } from "./helpers/app-logger";
-import { ApiRouting } from "./api.routing";
 import { Api } from "./helpers/api";
-import { IConfig, AppSetting } from "./config";
-import { SwaggerController } from "./controller/swagger.controller";
-import { AuthenticationModule } from "./helpers/authentication.module";
 
+const port = 50511;
 export class ExpressApi {
   public app: express.Express;
   private router: express.Router;
-  private config: IConfig;
 
   constructor() {
     this.app = express();
     this.router = express.Router();
-    this.config = AppSetting.getConfig();
     this.configure();
   }
 
@@ -34,15 +29,13 @@ export class ExpressApi {
     this.app.use(json({ limit: "50mb" }));
     this.app.use(compression());
     this.app.use(urlencoded({ limit: "50mb", extended: true }));
-    AuthenticationModule.authenticate(this.app);
     AppLogger.configureLogger();
   }
 
   private configureBaseRoute() {
     this.app.use((request, res, next) => {
-      const config = AppSetting.getConfig();
       if (request.url === "/") {
-        return res.json(config.appConfig);
+        return res.json({ version: "1.0.0.0", name: "express-api" });
       } else {
         next();
       }
@@ -61,8 +54,6 @@ export class ExpressApi {
       next();
     });
 
-    ApiRouting.ConfigureRouters(this.app);
-    SwaggerController.configure(this.app);
   }
 
   private errorHandler() {
@@ -90,13 +81,12 @@ export class ExpressApi {
 
   public run() {
     const server = http.createServer(this.app);
-    server.listen(this.config.port);
-    AppLogger.info("Starting", this.config.port);
+    server.listen(port);
+    AppLogger.info("Starting", port);
     server.on("error", this.onError);
   }
 
   private onError(error) {
-    const port = AppSetting.getConfig().port;
     if (error.syscall !== "listen") {
       throw error;
     }
