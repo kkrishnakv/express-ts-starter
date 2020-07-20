@@ -47,7 +47,6 @@ export class ExpressApi {
     this.app.use((request: Request, res: Response, next: NextFunction) => {
       for (const key in request.query) {
         if (key) {
-          // eslint-disable-next-line security/detect-object-injection
           request.query[key.toLowerCase()] = request.query[key];
         }
       }
@@ -98,11 +97,9 @@ export class ExpressApi {
       case "EACCES":
         console.error(`${bind} requires elevated privileges`);
         process.exit(1);
-        break;
       case "EADDRINUSE":
         console.error(`${bind} is already in use`);
         process.exit(1);
-        break;
       default:
         throw error;
     }
