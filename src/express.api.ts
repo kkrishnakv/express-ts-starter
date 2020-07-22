@@ -3,10 +3,8 @@ import { json, urlencoded } from "body-parser";
 import * as compression from "compression";
 import * as express from "express";
 import * as http from "http";
-
 import { AppLogger } from "./helpers/app-logger";
 import { Api } from "./helpers/api";
-
 const port = 50511;
 export class ExpressApi {
   public app: express.Express;
@@ -35,7 +33,7 @@ export class ExpressApi {
   private configureBaseRoute() {
     this.app.use((request, res, next) => {
       if (request.url === "/") {
-        return res.json({ version: "1.0.0.0", name: "express-api" });
+        return res.json({ version: "1.0.0", name: "express-api" });
       } else {
         next();
       }
@@ -52,7 +50,6 @@ export class ExpressApi {
       }
       next();
     });
-
   }
 
   private errorHandler() {
