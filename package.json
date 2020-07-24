@@ -5,11 +5,8 @@
   "author": "krishna",
   "main": "build/main.js",
   "scripts": {
-    "clean:build": "rimraf build",
-    "clean:dist": "rimraf dist",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "lint:fix-dry": "eslint --ext .ts ./ --fix-dry-run",
     "prettier:fix": "prettier --parser typescript --write \"src/**/*.ts\"",
     "start": "nodemon -V --exec ts-node src/main.ts"
   },
@@ -24,7 +21,6 @@
   "dependencies": {
     "body-parser": "1.18.3",
     "compression": "1.7.2",
-    "copy-webpack-plugin": "^6.0.2",
     "cors": "2.8.4",
     "express": "4.16.3",
     "fs": "0.0.1-security",
