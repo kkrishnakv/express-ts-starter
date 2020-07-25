@@ -5,15 +5,16 @@ import * as express from "express";
 import * as http from "http";
 import { AppLogger } from "./helpers/app-logger";
 import { Api } from "./helpers/api";
-const port = 50511;
+import { ConfigManager, Config } from "./config";
 export class ExpressApi {
   public app: express.Express;
   private router: express.Router;
-
+  private config: Config;
   constructor() {
     this.app = express();
     this.router = express.Router();
     this.configure();
+    this.config = new ConfigManager().config;
   }
 
   private configure() {
@@ -33,7 +34,7 @@ export class ExpressApi {
   private configureBaseRoute() {
     this.app.use((request, res, next) => {
       if (request.url === "/") {
-        return res.json({ version: "1.0.0", name: "express-api" });
+        return Api.ok(request, res, new ConfigManager().config.info);
       } else {
         next();
       }
@@ -76,16 +77,19 @@ export class ExpressApi {
   }
 
   public run() {
+    const port = this.config.port
     const server = http.createServer(this.app);
     server.listen(port);
-    AppLogger.info("Starting", port);
-    server.on("error", this.onError);
+    AppLogger.info(this.config.NODE_ENV, "Listen port at " + port);
+    server.on("error", this.onError,);
   }
 
   private onError(error) {
+    const port = error.port;
     if (error.syscall !== "listen") {
       throw error;
     }
+
 
     const bind = typeof port === "string" ? `Pipe ${port}` : `Port ${port}`;
 

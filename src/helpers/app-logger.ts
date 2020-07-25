@@ -41,9 +41,9 @@ export class AppLogger {
 
   private static GetValue(name: string, value: any) {
     if (typeof value === "string") {
-      return value;
+      return `${name}-  ${value}`;
     } else {
-      return JSON.stringify(value);
+      return `${name}-${JSON.stringify(value)}`;
     }
   }
 

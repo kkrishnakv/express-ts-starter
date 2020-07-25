@@ -1,59 +1,44 @@
 import { AppLogger } from "../helpers";
 
-import { IConfig } from "./i-config";
-import { AppSetting } from "./app.setting";
-
-import { Environment } from ".";
-
-import nconf = require("nconf");
+import { Config } from "./config";
+import * as nconf from "nconf";
 
 export class ConfigManager {
-  public Config: IConfig;
+
+  private configuration: Config;
+
   constructor() {
-    let filename;
+    this.init();
+  }
 
-    switch (AppSetting.Env) {
-      case Environment.Development:
-      case Environment.Local:
-        filename = "config.dev.json";
-        break;
-      case Environment.Production:
-        filename = "config.prod.json";
-        break;
-      default:
-        AppLogger.error("config", "Unable to read the config file");
-        process.exit();
-        break;
-    }
+  public get config(): Config {
+    return this.configuration;
+  }
+
+  private init() {
     nconf.use("memory");
-    if (!nconf.get("Config")) {
-      this.getFile(filename);
-    }
-    this.Config = nconf.get("Config");
-    if (!this.Config) {
-      AppLogger.error("config", "Unable to read the config file");
 
-      process.exit(1);
+    if (!nconf.get("info")) {
+      this.getFile();
     }
+    this.configuration = nconf.get();
+    nconf.required(['port']);
   }
 
-  public getFile(filename: string): void {
-    nconf.file("Config", {
-      file: filename,
-      dir: "./config/",
-      search: true,
+  private getFile(): void {
+    nconf.env(['NODE_ENV']).file("default", {
+      file: 'default.json',
+      dir: 'env',
+      type: 'json',
+      search: true
     });
-    if (!nconf.get("Config")) {
-      nconf.file("Config", {
-        file: `config/${filename}`,
-        dir: __dirname,
-        search: true,
-      });
-    }
+    const filename = `${nconf.get().NODE_ENV}.json`;
+    nconf.file({
+      file: filename,
+      dir: 'env',
+      search: true,
+      type: 'json'
+    });
   }
 
-  public reset(): void {
-    nconf.reset();
-    nconf.clear();
-  }
 }
