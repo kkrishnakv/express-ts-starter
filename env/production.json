@@ -1,0 +1,7 @@
+{
+  "info": {
+    "name": "Express Starter Kit",
+    "version": "1.0.0",
+    "env": "prod"
+  }
+}

@@ -8,7 +8,8 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prettier:fix": "prettier --parser typescript --write \"src/**/*.ts\"",
-    "start": "nodemon -V --exec ts-node src/main.ts"
+    "start:prod": "cross-env NODE_ENV=production nodemon -V --exec ts-node src/main.ts ",
+    "start": "cross-env NODE_ENV=development nodemon -V --exec ts-node src/main.ts "
   },
   "keywords": [
     "typescript",
@@ -22,14 +23,17 @@
     "body-parser": "1.18.3",
     "compression": "1.7.2",
     "cors": "2.8.4",
+    "cross-env": "^7.0.2",
     "express": "4.16.3",
     "fs": "0.0.1-security",
+    "nconf": "^0.10.0",
     "path": "0.12.7",
     "rimraf": "2.6.2",
     "winston": "3.3.3",
     "winston-daily-rotate-file": "4.5.0"
   },
   "devDependencies": {
+    "@types/nconf": "^0.10.0",
     "@types/body-parser": "1.17.0",
     "@types/compression": "0.0.36",
     "@types/cors": "2.8.4",

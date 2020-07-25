@@ -1,3 +1,2 @@
-export * from "./environment";
-export * from "./app.setting";
-export * from "./i-config";
+export * from "./config";
+export * from "./config.manager";
