@@ -15,7 +15,7 @@ export class CustomerController implements AppRoute {
     response: Response,
     next: NextFunction
   ): any {
-    return Api.ok(request, response, "Customer");
+    return Api.ok(request, response, "Ok.");
   }
 
 }
