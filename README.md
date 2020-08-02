@@ -20,7 +20,11 @@
 <br/>
 Base : https://www.youtube.com/watch?v=soByM3oX2mE
 <br/>
-JSON Based configuration https://www.youtube.com/watch?v=IIrPdHw2qV8&t=28s
+JSON Based configuration: https://www.youtube.com/watch?v=IIrPdHw2qV8&t=28s
+<br/>
+Configure Controller : https://youtu.be/CFJb8hHwchw
+<br/>
+<hr/>
 
 https://www.initpals.com/node-js/express-js-application-seed-project-with-typescript/<br/>
 https://www.initpals.com/node-js/how-to-use-json-based-configuration-in-express-js/
