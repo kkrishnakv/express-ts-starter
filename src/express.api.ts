@@ -6,15 +6,17 @@ import * as http from "http";
 import { AppLogger } from "./helpers/app-logger";
 import { Api } from "./helpers/api";
 import { ConfigManager, Config } from "./config";
+import { AppRouting } from "./app.routing";
 export class ExpressApi {
   public app: express.Express;
   private router: express.Router;
   private config: Config;
   constructor() {
+    this.config = new ConfigManager().config;
+
     this.app = express();
     this.router = express.Router();
     this.configure();
-    this.config = new ConfigManager().config;
   }
 
   private configure() {
@@ -39,7 +41,8 @@ export class ExpressApi {
         next();
       }
     });
-    this.app.use("/", this.router);
+    this.app.use(this.config.basePath, this.router);
+    new AppRouting(this.router);
   }
 
   private configureRoutes() {
