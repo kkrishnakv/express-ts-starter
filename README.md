@@ -19,11 +19,11 @@
 
 <br/>
 <hr/>
-Base : https://www.youtube.com/watch?v=soByM3oX2mE
+<a href="https://www.youtube.com/watch?v=soByM3oX2mE">Configure Base,Lint, Prettier, Winston Logger</a>
 <br/>
-JSON Based configuration: https://www.youtube.com/watch?v=IIrPdHw2qV8&t=28s
+<a href="https://www.youtube.com/watch?v=IIrPdHw2qV8">JSON Based configuration</a>
 <br/>
-Configure Controller : https://youtu.be/CFJb8hHwchw
+<a href="https://www.youtube.com/watch?v=CFJb8hHwchw">Configure Controller</a>
 <br/>
 <hr/>
 
