@@ -1,10 +1,7 @@
-import { AppLogger } from "../helpers";
-
 import { Config } from "./config";
 import * as nconf from "nconf";
 
 export class ConfigManager {
-
   private configuration: Config;
 
   constructor() {
@@ -22,23 +19,22 @@ export class ConfigManager {
       this.getFile();
     }
     this.configuration = nconf.get();
-    nconf.required(['port']);
+    nconf.required(["port"]);
   }
 
   private getFile(): void {
-    nconf.env(['NODE_ENV']).file("default", {
-      file: 'default.json',
-      dir: 'env',
-      type: 'json',
-      search: true
+    nconf.env(["NODE_ENV"]).file("default", {
+      file: "default.json",
+      dir: "env",
+      type: "json",
+      search: true,
     });
     const filename = `${nconf.get().NODE_ENV}.json`;
     nconf.file({
       file: filename,
-      dir: 'env',
+      dir: "env",
       search: true,
-      type: 'json'
+      type: "json",
     });
   }
-
 }
