@@ -71,5 +71,4 @@ export class CustomerController implements AppRoute {
     await helper.update();
     Api.ok(request, response, "updated");
   }
-
 }
