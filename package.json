@@ -28,7 +28,9 @@
     "fs": "0.0.1-security",
     "nconf": "^0.10.0",
     "path": "0.12.7",
+    "pg": "^8.3.3",
     "rimraf": "2.6.2",
+    "sequelize": "^6.3.5",
     "winston": "3.3.3",
     "winston-daily-rotate-file": "4.5.0"
   },
