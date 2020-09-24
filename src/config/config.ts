@@ -3,4 +3,5 @@ export interface Config {
   NODE_ENV: string;
   info: any;
   basePath: string;
+  databases: any;
 }

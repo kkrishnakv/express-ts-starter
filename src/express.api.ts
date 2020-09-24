@@ -49,6 +49,7 @@ export class ExpressApi {
     this.app.use((request: Request, res: Response, next: NextFunction) => {
       for (const key in request.query) {
         if (key) {
+          // eslint-disable-next-line security/detect-object-injection
           request.query[key.toLowerCase()] = request.query[key];
         }
       }
@@ -80,11 +81,11 @@ export class ExpressApi {
   }
 
   public run() {
-    const port = this.config.port
+    const port = this.config.port;
     const server = http.createServer(this.app);
     server.listen(port);
     AppLogger.info(this.config.NODE_ENV, "Listen port at " + port);
-    server.on("error", this.onError,);
+    server.on("error", this.onError);
   }
 
   private onError(error) {
@@ -93,7 +94,6 @@ export class ExpressApi {
       throw error;
     }
 
-
     const bind = typeof port === "string" ? `Pipe ${port}` : `Port ${port}`;
 
     // handle specific listen errors with friendly messages
@@ -101,9 +101,11 @@ export class ExpressApi {
       case "EACCES":
         console.error(`${bind} requires elevated privileges`);
         process.exit(1);
+        break;
       case "EADDRINUSE":
         console.error(`${bind} is already in use`);
         process.exit(1);
+        break;
       default:
         throw error;
     }
