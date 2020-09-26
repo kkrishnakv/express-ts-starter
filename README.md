@@ -25,6 +25,7 @@
 <br/>
 <a href="https://www.youtube.com/watch?v=CFJb8hHwchw">Configure Controller</a>
 <br/>
+<a href="https://youtu.be/164VCcRLfKk"> SQL Helper</a>
 <hr/>
 
 https://www.initpals.com/node-js/express-js-application-seed-project-with-typescript/<br/>
