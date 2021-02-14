@@ -21,10 +21,10 @@
       }
     }
   },
-  "s3":{
-    "bucketName": "<bucket name>",
-    "accessKeyId": "<access id>",
-    "secretAccessKey": "<>",
-    "region": "<>"
+  "s3": {
+    "bucketName": "starter-buc",
+    "accessKeyId": "AKIATCPYUAR3H25RIIFJ",
+    "secretAccessKey": "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",
+    "region": "ap-south-1"
   }
 }

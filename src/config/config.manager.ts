@@ -30,6 +30,7 @@ export class ConfigManager {
       search: true,
     });
     const filename = `${nconf.get().NODE_ENV}.json`;
+    console.log(filename);
     nconf.file({
       file: filename,
       dir: "env",
