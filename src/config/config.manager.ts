@@ -23,13 +23,13 @@ export class ConfigManager {
   }
 
   private getFile(): void {
-    nconf.env(["NODE_ENV"]).file("default", {
+    nconf.env(["APP_ENV"]).file("default", {
       file: "default.json",
       dir: "env",
       type: "json",
       search: true,
     });
-    const filename = `${nconf.get().NODE_ENV}.json`;
+    const filename = `${process.env.APP_ENV}.json`;
     console.log(filename);
     nconf.file({
       file: filename,
